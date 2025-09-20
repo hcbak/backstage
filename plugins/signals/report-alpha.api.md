@@ -7,8 +7,8 @@ import { AnyApiFactory } from '@backstage/frontend-plugin-api';
 import { ApiFactory } from '@backstage/frontend-plugin-api';
 import { ExtensionBlueprintParams } from '@backstage/frontend-plugin-api';
 import { ExtensionDataRef } from '@backstage/frontend-plugin-api';
-import { ExtensionDefinition } from '@backstage/frontend-plugin-api';
 import { JSX as JSX_2 } from 'react';
+import { OverridableExtensionDefinition } from '@backstage/frontend-plugin-api';
 import { OverridableFrontendPlugin } from '@backstage/frontend-plugin-api';
 
 // @alpha (undocumented)
@@ -16,7 +16,7 @@ const _default: OverridableFrontendPlugin<
   {},
   {},
   {
-    'api:signals': ExtensionDefinition<{
+    'api:signals': OverridableExtensionDefinition<{
       kind: 'api';
       name: undefined;
       config: {};
@@ -31,7 +31,7 @@ const _default: OverridableFrontendPlugin<
         params: ApiFactory<TApi, TImpl, TDeps>,
       ) => ExtensionBlueprintParams<AnyApiFactory>;
     }>;
-    'app-root-element:signals/signals-display': ExtensionDefinition<{
+    'app-root-element:signals/signals-display': OverridableExtensionDefinition<{
       kind: 'app-root-element';
       name: 'signals-display';
       config: {};
