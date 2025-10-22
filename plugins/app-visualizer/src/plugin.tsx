@@ -46,8 +46,8 @@ const appVisualizerPage = PageBlueprint.make({
   params: {
     path: '/visualizer',
     routeRef: rootRouteRef,
-    title: 'Root',
-    loader: async () => <div>The root page</div>,
+    title: 'Visualizer',
+    // loader: async () => <div>The root page</div>,
   },
 });
 
@@ -85,11 +85,12 @@ const treePageThing = PluginContentTopBarNavigableContentBlueprint.make({
   }
 })
  */
-const appVisualizerTreePage = PageBlueprint.make({
+const appVisualizerTreePage = SubPageBlueprint.make({
+  attachTo: { id: 'page:app-visualizer', input: 'pages' },
   name: 'tree',
   params: {
-    path: '/visualizer',
-    routeRef: treeSubRouteRef,
+    path: '/tree',
+    // routeRef: treeSubRouteRef,
     title: 'Tree',
     loader: () =>
       import('./components/AppVisualizerPage/TreeVisualizer').then(m => {
@@ -102,11 +103,12 @@ const appVisualizerTreePage = PageBlueprint.make({
       }),
   },
 });
-const appVisualizerDetailedPage = PageBlueprint.make({
+const appVisualizerDetailedPage = SubPageBlueprint.make({
+  attachTo: { id: 'page:app-visualizer', input: 'pages' },
   name: 'details',
   params: {
-    path: '/visualizer',
-    routeRef: detailedSubRouteRef,
+    path: '/details',
+    // routeRef: detailedSubRouteRef,
     title: 'Detailed',
     loader: () =>
       import('./components/AppVisualizerPage/DetailedVisualizer').then(m => {
@@ -119,11 +121,12 @@ const appVisualizerDetailedPage = PageBlueprint.make({
       }),
   },
 });
-const appVisualizerTextPage = PageBlueprint.make({
+const appVisualizerTextPage = SubPageBlueprint.make({
+  attachTo: { id: 'page:app-visualizer', input: 'pages' },
   name: 'text',
   params: {
-    path: '/visualizer',
-    routeRef: textSubRouteRef,
+    path: '/text',
+    // routeRef: textSubRouteRef,
     title: 'Text',
     loader: () =>
       import('./components/AppVisualizerPage/TextVisualizer').then(m => {

@@ -22,6 +22,7 @@ import {
 } from '../wiring';
 import { ExtensionBoundary } from '../components';
 import { toInternalSubRouteRef } from '../routing/SubRouteRef';
+import { Header } from '@backstage/ui';
 
 /**
  * Createx extensions that are routable React page components.
@@ -32,8 +33,9 @@ export const PageBlueprint = createExtensionBlueprint({
   kind: 'page',
   attachTo: { id: 'app/routes', input: 'routes' },
   inputs: {
-    tabs: createExtensionInput([
+    pages: createExtensionInput([
       coreExtensionData.routePath,
+      coreExtensionData.routeRef.optional(),
       coreExtensionData.reactElement,
       coreExtensionData.title.optional(),
     ]),
@@ -58,15 +60,26 @@ export const PageBlueprint = createExtensionBlueprint({
       defaultPath?: [Error: `Use the 'path' param instead`];
       path: string;
       title?: string;
-      loader: () => Promise<JSX.Element>;
+      loader?: () => Promise<JSX.Element>;
       routeRef?: RouteRef | SubRouteRef;
     },
     { config, node },
   ) {
     yield coreExtensionData.routePath(config.path ?? params.path);
-    yield coreExtensionData.reactElement(
-      ExtensionBoundary.lazy(node, params.loader),
-    );
+    if (params.loader) {
+      yield coreExtensionData.reactElement(
+        <>
+          <Header title={params.title} />
+          {ExtensionBoundary.lazy(node, params.loader)},
+        </>,
+      );
+    } else {
+      yield coreExtensionData.reactElement(
+        <>
+          <Header title={params.title} tabs={inputs.pages} />
+        </>,
+      );
+    }
     if (params.routeRef) {
       if (params.routeRef.$$type === '@backstage/SubRouteRef') {
         const subRouteRef = toInternalSubRouteRef(params.routeRef);
